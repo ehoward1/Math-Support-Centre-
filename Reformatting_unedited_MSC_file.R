@@ -12,7 +12,7 @@ require(dplyr)
 
 
 # read in file and summary
-MSC = read.csv("MSC.csv", header=TRUE)
+MSC = read.csv("MSC_unedited.csv", header=TRUE)
 head(MSC) # looking at the data
 summary(MSC)
 str(MSC)
