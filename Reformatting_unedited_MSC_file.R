@@ -12,7 +12,7 @@ require(dplyr)
 
 
 # read in file and summary
-MSC = read.csv("MSC_unedited.csv", header=TRUE)
+MSC = read.csv("Original.csv", header=TRUE)
 head(MSC) # looking at the data
 summary(MSC)
 str(MSC)
@@ -152,8 +152,8 @@ MSC_new_filtered = subset(MSC_new_filtered, Hour<21)
 MSC = MSC_new_filtered
 
 # Save results
-# setwd("~/phd doc/P6 MSC Prediction")
-# write.csv(MSC, "MSC_edited1819.csv")
+# setwd()
+# write.csv(MSC, "MSC.csv")
 
 # Remove any "HOT TOPICS" - these are hour long tutorials/workshops and
 # should not be included in waiting list results
