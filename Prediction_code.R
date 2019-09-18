@@ -60,7 +60,7 @@ prediction_function <- function(dataset){ # dataset boost is for xgboost
   pred_earth = vector("numeric")
   grades = vector("numeric")
   
-  # Loop through the folds for Random Forest, PC regression and XGBoost
+  # Loop through the folds for Random Forest, PC regression etc
   for(i in 1:10){
     
     Sys.sleep(0.1)
