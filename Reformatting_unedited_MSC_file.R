@@ -76,7 +76,7 @@ MSC$tutor_finish_time = MSC$Date + dseconds(MSC$wait_time) + dseconds(MSC$with_t
 # Convert time in seconds to time in minutes
 MSC$wait_time = round(MSC$wait_time/60,0) 
 # Entry where student waited longer than two hours is likely an error so remove
-MSC = subset(MSC, wait_time<120)
+MSC = subset(MSC, wait_time<91)
 
 # Ordering date which helps next section
 MSC = MSC[order(MSC$Date, decreasing = FALSE ),]
