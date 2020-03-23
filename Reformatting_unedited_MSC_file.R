@@ -138,18 +138,19 @@ colnames(MSC_171) = colnames(MSC_151)
 colnames(MSC_161) = colnames(MSC_151)
 MSC_new  =rbind.data.frame(MSC_151, MSC_152, MSC_161, MSC_162, 
                            MSC_171, MSC_172, MSC_181, MSC_182, MSC_192)
-head(MSC_new) # check data
+head(MSC) # check data
 
 #########################################################
 
 # Reformatting done, now remove NA values owing to outside regular times
 
-MSC_new_filtered = subset(MSC_new, term_week != "NA")
-MSC_new_filtered = subset(MSC_new_filtered, Day != "NA")
-MSC_new_filtered = subset(MSC_new_filtered, Hour>8)
-MSC_new_filtered = subset(MSC_new_filtered, Hour<21)
+MSC = subset(MSC, term_week != "NA")
+MSC = subset(MSC, Day != "NA")
+MSC = subset(MSC, Hour>8)
+MSC = subset(MSC, Hour<21)
 
-MSC = MSC_new_filtered
+# No longer need tutor start time or end time so remove
+MSC = subset(MSC, select=(-c(tutor_start_time, tutor_finish_time)))
 
 # Save results
 # setwd()
