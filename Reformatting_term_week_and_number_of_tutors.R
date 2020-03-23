@@ -907,7 +907,6 @@ MSC_162 <- resourcesfunction(tutor16_2, MSC16_2)
 
 tutor16_1=read.csv("Tutors 2016 1.csv", header=TRUE)
 MSC_161 <- resourcesfunction(tutor16_1, MSC16_1)
-head(MSC_161)
 
 tutor15_2=read.csv("Tutors 2015 2.csv", header=TRUE)
 MSC_152 <- resourcesfunction(tutor15_2, MSC15_2)
