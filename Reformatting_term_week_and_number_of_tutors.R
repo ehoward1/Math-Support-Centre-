@@ -884,7 +884,7 @@ resourcesfunction <- function(tutor_term, MSC_general){
 }
 
 #create each resource count matrix using resourcesfunction
-setwd("~/phd doc/P6 MSC Prediction/Tutor timetables")
+setwd("/Tutor timetables")
 
 # Create number of tutors variable
 tutor19_2=read.csv("Tutors 2019 2.csv", header=TRUE)
