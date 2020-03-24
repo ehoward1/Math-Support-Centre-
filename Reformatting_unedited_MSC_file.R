@@ -173,6 +173,7 @@ head(MSC) # check data
 # Reformatting done, now remove NA values owing to outside regular times
 
 MSC = subset(MSC, term_week != "NA")
+MSC = subset(MSC, number_tutors != "NA")
 MSC = subset(MSC, Day != "NA")
 MSC = subset(MSC, Hour>8)
 MSC = subset(MSC, Hour<21)
@@ -180,7 +181,7 @@ MSC = subset(MSC, Hour<21)
 # No longer need the selected variables
 MSC = subset(MSC, select=(-c(Date, with_tutor, pause_tutor, tutor_start_time, tutor_finish_time, Date1)))
 
-dim(MSC) # Should give 22,896 rows and 43 columns
+dim(MSC) # Should give 22,724 rows and 43 columns
 
 # Save results
 # setwd()
