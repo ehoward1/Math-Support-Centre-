@@ -33,17 +33,17 @@ max = nrow(MSC)/2 %>% round()
 # Histogram of waiting times
 ggplot(data=MSC, aes(wait_time)) + 
   geom_histogram(breaks=seq(0, 100, by = 5),aes(fill=..count..))+
-  labs(title="Histogram of Student Waiting Times (min)") +
+  labs(title="Histogram of Student Waiting Times") +
   scale_x_continuous(breaks=seq(0, 90, 10))+ 
   theme_bw()+
-  scale_y_continuous(breaks=seq(0, max, 1000))+ 
-  labs(x="Waiting Time (in Min)", y="Count") + 
+  scale_y_continuous(breaks=seq(0, max, 2000))+ 
+  labs(x="Waiting Time (in Min)", y="Number\nof\nVisits") + 
   theme(
     plot.title = element_text(lineheight=0, color='black', face="bold",size=13),
-    axis.title.x=element_text(angle=0, color='black',face='bold', size=11),
-    axis.title.y=element_text(angle=0, vjust = 1, color='black',face='bold', size=11),
-    axis.text.x=element_text(angle=0, color='black', size=11),
-    axis.text.y=element_text(angle=0, color='black',  size=11)
+    axis.title.x=element_text(angle=0, color='black',face='bold', size=13),
+    axis.title.y=element_text(angle=0, vjust = 1, color='black',face='bold', size=13),
+    axis.text.x=element_text(angle=0, color='black', size=13),
+    axis.text.y=element_text(angle=0, color='black',  size=13)
   )  +   theme(legend.position = "none") 
 
 
