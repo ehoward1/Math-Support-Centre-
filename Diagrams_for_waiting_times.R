@@ -19,20 +19,14 @@ require(viridis)
 MSC = read.csv("MSC.csv", header=TRUE)
 
 # Make sure the variables are coded correctly
-MSC = subset(MSC, term_week != "NA", Day != "NA") 
-MSC = subset(MSC, wait_time<91) # Restrict waiting times to 90min max as anything above is likely to be an error
 MSC$Year = MSC$Year %>% factor(levels=c("2015","2016","2017","2018","2019"), ordered=TRUE) 
 MSC$Hour = as.numeric(MSC$Hour) 
-MSC = subset(MSC,Hour>8)
-MSC = subset(MSC, Hour<20)
-MSC = subset(MSC,number_tutors>0)
 MSC$Minute = as.numeric(MSC$Minute)
 MSC$number_tutors = as.numeric(as.character(MSC$number_tutors))
 MSC$Semester = MSC$Semester %>% factor(levels=c("1","2"), ordered=TRUE)
 MSC$term_week = MSC$term_week %>% factor(levels=c("1","2","3","4","5","6","7","8",
                                                   "9","10","11","12","rev","exam"), labels=c("1","2","3","4","5","6","7","8","9","10","11","12","rev","exam"), ordered=TRUE) 
 MSC$Day = MSC$Day %>% factor(levels=c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), ordered=TRUE)
-
 # Helps withdiagram axis
 max = nrow(MSC)/2 %>% round()
 
