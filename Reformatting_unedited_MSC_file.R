@@ -69,6 +69,36 @@ MSC$Day_Wed = ifelse(MSC$Day=="Wednesday",1,0)
 MSC$Day_Thur = ifelse(MSC$Day=="Thursday",1,0)
 MSC$Day_Fri = ifelse(MSC$Day=="Friday",1,0)
 
+# Remove any "HOT TOPICS" - these are hour long tutorials/workshops and
+# should not be included in waiting list results
+MSC$Date1 = as.Date(MSC$Date)
+MSC = MSC[(which(MSC$Date1 != "2019-02-25" | MSC$Hour!=18 | MSC$Minute != 5)),]
+MSC = MSC[(which(MSC$Date1 != "2019-03-25" | MSC$Hour!=18 | MSC$Minute != 0)),]
+MSC = MSC[(which(MSC$Date1 != "2018-11-12" | MSC$Hour!=19 | MSC$Minute != 1)),]
+MSC = MSC[(which(MSC$Date1 != "2018-11-13" | MSC$Hour!=18 | MSC$Minute != 45)),]
+MSC = MSC[(which(MSC$Date1 != "2018-10-10" | MSC$Hour!=18 | MSC$Minute != 37)),]
+MSC = MSC[(which(MSC$Date1 != "2017-10-12" | MSC$Hour!=9 | MSC$Minute !=27)),]
+MSC = MSC[(which(MSC$Date1 != "2017-11-21" | MSC$Hour!=19 | MSC$Minute !=3)),]
+MSC = MSC[(which(MSC$Date1 != "2017-11-29" | MSC$Hour!=19 | MSC$Minute !=6)),]
+MSC = MSC[(which(MSC$Date1 != "2016-04-06" | MSC$Hour!=18 | MSC$Minute !=59)),]
+MSC = MSC[(which(MSC$Date1 != "2017-10-05" | MSC$Hour!=19 | MSC$Minute !=3)),]
+MSC = MSC[(which(MSC$Date1 != "2017-10-05" | MSC$Hour!=19 | MSC$Minute !=22)),]
+MSC = MSC[(which(MSC$Date1 != "2016-02-08" | MSC$Hour!=19 | MSC$Minute !=2)),]
+MSC = MSC[(which(MSC$Date1 != "2016-02-23" | MSC$Hour!=18 | MSC$Minute !=32)),]
+MSC = MSC[(which(MSC$Date1 != "2016-03-07" | MSC$Hour!=19 | MSC$Minute !=16)),]
+MSC = MSC[(which(MSC$Date1 != "2016-03-09" | MSC$Hour!=18 | MSC$Minute !=3)),]
+MSC = MSC[(which(MSC$Date1 != "2016-04-04" | MSC$Hour!=19 )),]
+MSC = MSC[(which(MSC$Date1 != "2016-04-05" | MSC$Hour!=18 )),]
+MSC = MSC[(which(MSC$Date1 != "2016-04-06" | MSC$Hour!=18 )),]
+MSC = MSC[(which(MSC$Date1 != "2015-10-12" | MSC$Hour!=17 | MSC$Minute !=29)),]
+MSC = MSC[(which(MSC$Date1 != "2015-10-12" | MSC$Hour!=19 | MSC$Minute !=25)),]
+MSC = MSC[(which(MSC$Date1 != "2015-10-21" | MSC$Hour!=18 | MSC$Minute !=21)),]
+MSC = MSC[(which(MSC$Date1 != "2015-10-27" | MSC$Hour!=17 | MSC$Minute !=34)),]
+MSC = MSC[(which(MSC$Date1 != "2015-11-16" | MSC$Hour!=18 | MSC$Minute !=4)),]
+MSC = MSC[(which(MSC$Date1 != "2015-11-23" | MSC$Hour!=17 | MSC$Minute !=58)),]
+MSC = MSC[(which(MSC$Date1 != "2015-11-17" | MSC$Hour!=17 | MSC$Minute !=36)),]
+MSC = MSC[(which(MSC$Date1 != "2015-04-20" | MSC$Hour!=19 | MSC$Minute !=21)),]
+
 # Calculating how many students in the room at time
 MSC$tutor_start_time = MSC$Date + dseconds(MSC$wait_time) # Start time = entry + wait times
 MSC$tutor_finish_time = MSC$Date + dseconds(MSC$wait_time) + dseconds(MSC$with_tutor) 
@@ -78,7 +108,7 @@ MSC$wait_time = round(MSC$wait_time/60,0)
 # Entry where student waited longer than two hours is likely an error so remove
 MSC = subset(MSC, wait_time<91)
 
-# Ordering date which helps next section
+# Ordering date with queueing variable
 MSC = MSC[order(MSC$Date, decreasing = FALSE ),]
 
 # how many people are waiting and with tutors? checking whether the prior 42 
@@ -94,10 +124,8 @@ for(i in 2:nrow(MSC)){
 # with who could access the MSC. The MSC was limited
 # to level 0, 1 and 2 modules owing to volume of users)
 
-# change = ymd_hms("2015-10-19 08:00:00", tz = "GMT")
-# MSC$change_over = ifelse(MSC$Date < change, 1, 0)
-
-MSC$Date = as.Date(MSC$Date) 
+change = ymd_hms("2015-10-19 08:00:00", tz = "GMT")
+MSC$change_over = ifelse(MSC$Date < change, 1, 0)
 
 # Code for number of tutors and to make the code run quicker, smaller
 # subsets (by semester) have been created which will be combined again later
@@ -136,7 +164,7 @@ colnames(MSC_192) = colnames(MSC_151)
 colnames(MSC_181) = colnames(MSC_151)
 colnames(MSC_171) = colnames(MSC_151)
 colnames(MSC_161) = colnames(MSC_151)
-MSC_new  =rbind.data.frame(MSC_151, MSC_152, MSC_161, MSC_162, 
+MSC  =rbind.data.frame(MSC_151, MSC_152, MSC_161, MSC_162, 
                            MSC_171, MSC_172, MSC_181, MSC_182, MSC_192)
 head(MSC) # check data
 
@@ -149,42 +177,13 @@ MSC = subset(MSC, Day != "NA")
 MSC = subset(MSC, Hour>8)
 MSC = subset(MSC, Hour<21)
 
-# No longer need tutor start time or end time so remove
-MSC = subset(MSC, select=(-c(tutor_start_time, tutor_finish_time)))
+# No longer need the selected variables
+MSC = subset(MSC, select=(-c(Date, with_tutor, pause_tutor, tutor_start_time, tutor_finish_time, Date1)))
+
+dim(MSC) # Should give 22,896 rows and 43 columns
 
 # Save results
 # setwd()
-# write.csv(MSC, "MSC.csv")
-
-# Remove any "HOT TOPICS" - these are hour long tutorials/workshops and
-# should not be included in waiting list results
-MSC = filter(MSC, Month != 2| Hour != 18 | Day != "Monday" | Year != 2019 | Minute != 5) 
-MSC = filter(MSC, Month != 3| Hour != 18| Day != "Monday" | Year != 2019 | Minute != 0) 
-MSC = filter(MSC, Month != 11| Hour != 19 | Day != "Monday" | Year != 2018 | Minute != 1) 
-MSC = filter(MSC, Month != 11| Hour != 18 | Day != "Tuesday" | Year != 2018 | Minute != 45) 
-MSC = filter(MSC, Month != 10| Hour != 18 | Day != "Wednesday" | Year != 2018 | Minute != 37) 
-MSC = filter(MSC, Month != 10 | Hour != 9 | Day != "Thursday" | Year != 2017) 
-MSC = filter(MSC, Month != 11 | Hour != 19 | Day != "Tuesday" | Year != 2017 | Minute != 3) 
-MSC = filter(MSC, Month != 11 | Hour != 19 | Day != "Wednesday" | Year != 2017 | Minute != 6) 
-MSC = filter(MSC, Month != 4 | Hour != 18 | Day != "Wednesday" | Year != 2016 | Minute != 59) 
-MSC = filter(MSC, Month != 10 | Hour != 19 | Day != "Thursday" | Year != 2017 | Minute != 3) 
-MSC = filter(MSC, Month != 10 | Hour != 19 | Day != "Thursday" | Year != 2017 | Minute != 22) 
-MSC = filter(MSC, Month != 2 | Hour != 19 | Day != "Monday" | Year != 2016 | Minute != 2) 
-MSC = filter(MSC, Month != 2 | Hour != 18 | Day != "Tuesday" | Year != 2016 | Minute != 32) 
-MSC = filter(MSC, Month != 3 | Hour != 19 | Day != "Monday" | Year != 2016 | Minute != 16) 
-MSC = filter(MSC, Month != 3 | Hour != 18 | Day != "Monday" | Year != 2016 | Minute != 16) 
-MSC = filter(MSC, Month != 3 | Hour != 18 | Day != "Wednesday" | Year != 2016 | Minute != 3) 
-MSC = filter(MSC, Month != 4 | Hour != 19  | Year != 2016 ) 
-MSC = filter(MSC, Month != 4 | Hour != 18  | Year != 2016 )   
-MSC = filter(MSC, Month != 10 | Hour != 17 | Day != "Monday" | Year != 2015 | Minute != 29) 
-MSC = filter(MSC, Month != 10| Hour != 19 | Day != "Monday" | Year != 2015 | Minute != 25) 
-MSC = filter(MSC, Month != 10| Hour != 18 | Day != "Wednesday" | Year != 2015 | Minute != 21)
-MSC = filter(MSC, Month != 10| Hour != 17 | Day != "Tuesday" | Year != 2015 | Minute != 34) 
-MSC = filter(MSC, Month != 10| Hour != 19 | Day != "Thursday" | Year != 2015 | Minute != 15) 
-MSC = filter(MSC, Month != 11| Hour != 18 | Day != "Monday" | Year != 2015 | Minute != 4) 
-MSC = filter(MSC, Month != 11| Hour != 17 | Day != "Tuesday" | Year != 2015 | Minute != 36)
-MSC = filter(MSC, Month != 11| Hour != 17 | Day != "Monday" | Year != 2015 | Minute != 58) 
-MSC = filter(MSC, Month != 4| Hour != 19 | Day != "Monday" | Year != 2015 | Minute != 21) 
-MSC = filter(MSC, Month != 4| Hour != 19 | Day != "Tuesday" | Year != 2015 | Minute != 37) 
+write.csv(MSC, "MSC.csv")
 
 # The MSC file should now be ready for analysing
