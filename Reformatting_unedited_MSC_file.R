@@ -185,6 +185,6 @@ dim(MSC) # Should give 22,724 rows and 43 columns
 
 # Save results
 # setwd()
-write.csv(MSC, "MSC.csv")
+write.csv(MSC, "MSC.csv", row.names = FALSE)
 
 # The MSC file should now be ready for analysing
