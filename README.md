@@ -1,7 +1,7 @@
 # Math-Support-Centre-
 
 This repository contains code to analysis Maths Support Centre data and produce an RShiny forecasting app for waiting times.
-A brief overview will be presented at CETL-MSOR 2019 in DCU.
+A brief overview was presented at CETL-MSOR 2019 in DCU.
 
 Stage 1: From the "Original.csv" file, use the files "Reformatting_unedited_MSC_file.R" and "Reformatting_term_week_and_number_of_tutors.R" to create a usable MSC file for data analytics ("MSC.csv").
 
