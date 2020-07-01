@@ -863,6 +863,107 @@ table(MSC19_2$Week)%>% sum()
 table(MSC19_2$term_week) %>% sum () 
 
 
+
+## now 2019
+
+# 2019 sem 1 which is 2019/20 calender year
+##############################
+
+
+#DFIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+######################################
+
+
+term_week_1_Start = as.Date('2019-09-09')
+term_week_1_End = as.Date('2019-09-15')
+
+term_week_2_Start = as.Date('2019-09-16')
+term_week_2_End = as.Date('2019-09-22')
+
+term_week_3_Start = as.Date('2019-09-23')
+term_week_3_End = as.Date('2019-09-29')
+
+term_week_4_Start = as.Date('2019-09-30')
+term_week_4_End = as.Date('2019-10-06')
+
+term_week_5_Start = as.Date('2019-10-07')
+term_week_5_End = as.Date('2019-10-13')
+
+term_week_6_Start = as.Date('2019-10-14')
+term_week_6_End = as.Date('2019-10-20')
+
+term_week_7_Start = as.Date('2019-10-21')
+term_week_7_End = as.Date('2019-10-27')
+
+term_week_8_Start = as.Date('2019-10-28')
+term_week_8_End = as.Date('2019-11-03')
+
+term_week_9_Start = as.Date('2019-11-04')
+term_week_9_End = as.Date('2019-11-10')
+
+term_week_10_Start = as.Date('2019-11-11')
+term_week_10_End = as.Date('2019-11-17')
+
+term_week_11_Start = as.Date('2019-11-18')
+term_week_11_End = as.Date('2019-11-24')
+
+term_week_12_Start = as.Date('2019-11-25')
+term_week_12_End = as.Date('2019-12-01')
+
+term_week_rev_Start = as.Date('2019-12-02')
+term_week_rev_End = as.Date('2019-12-08')
+
+term_week_exam_Start = as.Date('2019-12-09')
+term_week_exam_End = as.Date('2019-12-20')
+
+
+MSC19_1$term_week = lapply(MSC19_1$Date,FUN = function(x){
+  x = as.Date(x)
+  if(is.na(x)){
+    return(NA)
+  }else if(term_week_1_Start <= x & x <= term_week_1_End){
+    return("1")
+  }else if(term_week_2_Start <= x & x <= term_week_2_End){
+    return("2")
+  }else if(term_week_3_Start <= x & x <= term_week_3_End){
+    return("3")
+  }else if(term_week_4_Start <= x & x <= term_week_4_End){
+    return("4")
+  }else if(term_week_5_Start <= x & x <= term_week_5_End){
+    return("5")
+  }else if(term_week_6_Start <= x & x <= term_week_6_End){
+    return("6")
+  }else if(term_week_7_Start <= x & x <= term_week_7_End){
+    return("7")
+  }else if(term_week_8_Start <= x & x <= term_week_8_End){
+    return("8")
+  }else if(term_week_9_Start <= x & x <= term_week_9_End){
+    return("9")
+  }else if(term_week_10_Start <= x & x <= term_week_10_End){
+    return("10")
+  }else if(term_week_11_Start <= x & x <= term_week_11_End){
+    return("11")
+  }else if(term_week_12_Start <= x & x <= term_week_12_End){
+    return("12")
+  }else if(term_week_rev_Start <= x & x <= term_week_rev_End){
+    return("rev")
+  }else if(term_week_exam_Start <= x & x <= term_week_exam_End){
+    return("exam")
+  }else{
+    return("Other")
+  }
+})
+
+MSC19_1$term_week = factor(MSC19_1$term_week ,levels=c("1","2","3","4","5","6","7","8","9",
+                                                       "10","11","12","rev","exam",NA),
+                           ordered=TRUE,exclude = NULL)
+
+table(MSC19_1$Week)%>% sum()
+table(MSC19_1$term_week) %>% sum () 
+
+
 ##########################################################
 ###########################################################
 ##########################################################
@@ -884,9 +985,12 @@ resourcesfunction <- function(tutor_term, MSC_general){
 }
 
 #create each resource count matrix using resourcesfunction
-setwd("/Tutor timetables")
+#setwd("~/Tutor timetables")
 
 # Create number of tutors variable
+tutor19_1=read.csv("Tutors 2019 1.csv", header=TRUE)
+MSC_191 <- resourcesfunction(tutor19_1, MSC19_1)
+
 tutor19_2=read.csv("Tutors 2019 2.csv", header=TRUE)
 MSC_192 <- resourcesfunction(tutor19_2, MSC19_2)
 
