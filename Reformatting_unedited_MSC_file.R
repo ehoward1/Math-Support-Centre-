@@ -69,9 +69,19 @@ MSC$Day_Wed = ifelse(MSC$Day=="Wednesday",1,0)
 MSC$Day_Thur = ifelse(MSC$Day=="Thursday",1,0)
 MSC$Day_Fri = ifelse(MSC$Day=="Friday",1,0)
 
+
 # Remove any "HOT TOPICS" - these are hour long tutorials/workshops and
 # should not be included in waiting list results
 MSC$Date1 = as.Date(MSC$Date)
+MSC = MSC[(which(MSC$Date1 != "2019-10-01" | MSC$Hour!=18 | MSC$Minute != 47)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-13" | MSC$Hour!=18 | MSC$Minute != 54)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-12" | MSC$Hour!=18 | MSC$Minute != 49)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-19" | MSC$Hour!=19 | MSC$Minute != 1)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-19" | MSC$Hour!=18 | MSC$Minute != 47)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-19" | MSC$Hour!=18 | MSC$Minute != 54)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-19" | MSC$Hour!=18 | MSC$Minute != 58)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-20" | MSC$Hour!=19 | MSC$Minute != 1)),]
+MSC = MSC[(which(MSC$Date1 != "2019-11-20" | MSC$Hour!=18 | MSC$Minute != 50)),]
 MSC = MSC[(which(MSC$Date1 != "2019-02-25" | MSC$Hour!=18 | MSC$Minute != 5)),]
 MSC = MSC[(which(MSC$Date1 != "2019-03-25" | MSC$Hour!=18 | MSC$Minute != 0)),]
 MSC = MSC[(which(MSC$Date1 != "2018-11-12" | MSC$Hour!=19 | MSC$Minute != 1)),]
@@ -148,6 +158,8 @@ MSC18_2 = subset(MSC, Semester=="2")
 MSC18_2 = subset(MSC18_2, Year=="2018")
 MSC19_2 = subset(MSC, Semester=="2")
 MSC19_2 = subset(MSC19_2, Year=="2019")
+MSC19_1 = subset(MSC, Semester=="1")
+MSC19_1 = subset(MSC19_1, Year=="2019")
 
 ################################################################
 ################################################################
@@ -161,11 +173,12 @@ colnames(MSC_162) = colnames(MSC_151)
 colnames(MSC_172) = colnames(MSC_151)
 colnames(MSC_182) = colnames(MSC_151)
 colnames(MSC_192) = colnames(MSC_151)
+colnames(MSC_191) = colnames(MSC_151)
 colnames(MSC_181) = colnames(MSC_151)
 colnames(MSC_171) = colnames(MSC_151)
 colnames(MSC_161) = colnames(MSC_151)
 MSC  =rbind.data.frame(MSC_151, MSC_152, MSC_161, MSC_162, 
-                           MSC_171, MSC_172, MSC_181, MSC_182, MSC_192)
+                           MSC_171, MSC_172, MSC_181, MSC_182, MSC_192, MSC_191)
 head(MSC) # check data
 
 #########################################################
@@ -181,7 +194,7 @@ MSC = subset(MSC, Hour<21)
 # No longer need the selected variables
 MSC = subset(MSC, select=(-c(Date, with_tutor, pause_tutor, tutor_start_time, tutor_finish_time, Date1)))
 
-dim(MSC) # Should give 22,724 rows and 43 columns
+dim(MSC) # Should give 25,691 rows and 43 columns
 
 # Save results
 # setwd()
