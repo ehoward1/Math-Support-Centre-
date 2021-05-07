@@ -27,7 +27,7 @@ MSC$Year = year(MSC$Date) %>% factor(levels=c("2015","2016","2017","2018", "2019
 MSC$Day = weekdays(MSC$Date) %>% factor(levels=c("Monday","Tuesday","Wednesday",
                                                  "Thursday","Friday"),
                                         ordered=TRUE) 
-MSC$Hour = hour(MSC$Date) %>% as.numeric()
+MSC$Hour = hour(MSC$Date) %>% as.numeric() # Note: while the offical start ime is 10am, the log-in may open early e.g., 9.58am
 MSC$Minute = minute(MSC$Date) %>% as.numeric()
 MSC$Semester = ifelse(MSC$Month < 6, 2, 1) %>% factor(levels=c("1","2"), ordered=TRUE)
 MSC$Week=week(MSC$Date)
@@ -114,7 +114,7 @@ MSC$tutor_start_time = MSC$Date + dseconds(MSC$wait_time) # Start time = entry +
 MSC$tutor_finish_time = MSC$Date + dseconds(MSC$wait_time) + dseconds(MSC$with_tutor) 
 
 # Convert time in seconds to time in minutes
-MSC$wait_time = round(MSC$wait_time/60,0) 
+MSC$wait_time = round(MSC$wait_time/60,2) 
 # Entry where student waited longer than two hours is likely an error so remove
 MSC = subset(MSC, wait_time<91)
 
@@ -186,7 +186,7 @@ head(MSC) # check data
 # Reformatting done, now remove NA values owing to outside regular times
 
 MSC = subset(MSC, term_week != "NA")
-MSC = subset(MSC, number_tutors != "NA")
+MSC = subset(MSC, number_tutors != "NA") ##
 MSC = subset(MSC, Day != "NA")
 MSC = subset(MSC, Hour>8)
 MSC = subset(MSC, Hour<21)
@@ -194,7 +194,7 @@ MSC = subset(MSC, Hour<21)
 # No longer need the selected variables
 MSC = subset(MSC, select=(-c(Date, with_tutor, pause_tutor, tutor_start_time, tutor_finish_time, Date1)))
 
-dim(MSC) # Should give 25,691 rows and 43 columns
+dim(MSC) # Should give 25,702 rows and 43 columns
 
 # Save results
 # setwd()
